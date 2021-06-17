@@ -103,12 +103,12 @@ class JyFpPlugin: FlutterPlugin, MethodCallHandler, EventChannel.StreamHandler {
       "getFingerInfo" -> {
         val taskGetFinger = Runnable {
           playSound(R.raw.finger_collect, 2500)
-          val finger = FpCommon.getFingerInfo()
+          val finger = FpCommon.getFingerObj(0)
           val event = if (finger != null) {
             playSound(R.raw.finger_success, 1500)
             val base64Feature = Base64.encodeToString(finger.fpFeature, Base64.DEFAULT)
             val outputStream = ByteArrayOutputStream()
-            finger.fpBitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream)
+            finger.fpBitmap.compress(Bitmap.CompressFormat.PNG, 100, outputStream)
             outputStream.toByteArray()
             mapOf(
                     "event" to EVENT_ON_FINGER_RECEIVED,
@@ -171,6 +171,7 @@ class JyFpPlugin: FlutterPlugin, MethodCallHandler, EventChannel.StreamHandler {
       else -> result.notImplemented()
     }
   }
+
 
   override fun onDetachedFromEngine(@NonNull binding: FlutterPlugin.FlutterPluginBinding) {
     channel.setMethodCallHandler(null)
