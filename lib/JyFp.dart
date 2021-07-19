@@ -29,7 +29,7 @@ class JyFp {
   static JyFp _instance;
   static const _channel = const MethodChannel('JyFp');
   static const _eventChannel = const EventChannel("JyFpEvent");
-  factory JyFp() => _instance ??= JyFp._();
+  factory JyFp() => JyFp._();
 
   void _onEvent(dynamic event) {
     switch (event["event"]) {
